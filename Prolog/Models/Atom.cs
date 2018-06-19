@@ -4,7 +4,6 @@ namespace Prolog.Models
     {
         public Atom()
         {
-            this.Discriminator = 1;
         }
     }
 }

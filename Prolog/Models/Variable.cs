@@ -4,7 +4,6 @@ namespace Prolog.Models
     {
         public Variable()
         {
-            this.Discriminator = 0;
         }
     }
 }
