@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Prolog.Models
 {
-    public class Rule
+    public class Rule : IHaveIdentifier
     {
         public long Identifier { get; set; }
         public Fact Response { get; set; }

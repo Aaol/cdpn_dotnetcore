@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Prolog.Models
 {
-    public abstract class Argument
+    public abstract class Argument : IHaveIdentifier
     {
         public long Identifier { get; set; }
         public string Name { get; set; }

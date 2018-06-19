@@ -1,4 +1,5 @@
 ﻿using System;
+using Prolog.Parser;
 
 namespace Prolog
 {
@@ -6,7 +7,9 @@ namespace Prolog
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            RuleParser parser = new RuleParser();
+            parser.AddRule();
+            Console.Read();
         }
     }
 }
