@@ -7,9 +7,8 @@ namespace Prolog
     {
         static void Main(string[] args)
         {
-            RuleParser parser = new RuleParser();
-            parser.AddRule();
-            Console.Read();
+            RuleConsole console = new RuleConsole();
+            console.MyMagnificientRuleConsole();
         }
     }
 }

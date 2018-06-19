@@ -74,13 +74,14 @@ namespace Prolog.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long?>("ResponseId");
+                    b.Property<long>("IdResponse");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ResponseId");
+                    b.HasIndex("IdResponse")
+                        .IsUnique();
 
-                    b.ToTable("rules");
+                    b.ToTable("Rules");
                 });
 
             modelBuilder.Entity("Prolog.Models.Atom", b =>
@@ -116,7 +117,7 @@ namespace Prolog.Migrations
 
             modelBuilder.Entity("Prolog.Models.Fact", b =>
                 {
-                    b.HasOne("Prolog.Models.Rule")
+                    b.HasOne("Prolog.Models.Rule", "Rule")
                         .WithMany("Facts")
                         .HasForeignKey("RuleId");
                 });
@@ -124,8 +125,9 @@ namespace Prolog.Migrations
             modelBuilder.Entity("Prolog.Models.Rule", b =>
                 {
                     b.HasOne("Prolog.Models.Fact", "Response")
-                        .WithMany()
-                        .HasForeignKey("ResponseId");
+                        .WithOne("RuleResponse")
+                        .HasForeignKey("Prolog.Models.Rule", "IdResponse")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

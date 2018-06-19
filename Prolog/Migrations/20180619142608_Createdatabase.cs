@@ -2,7 +2,7 @@
 
 namespace Prolog.Migrations
 {
-    public partial class CreateDatabase : Migration
+    public partial class Createdatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,16 +42,16 @@ namespace Prolog.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "rules",
+                name: "Rules",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ResponseId = table.Column<long>(nullable: true)
+                    IdResponse = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_rules", x => x.Id);
+                    table.PrimaryKey("PK_Rules", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,9 +67,9 @@ namespace Prolog.Migrations
                 {
                     table.PrimaryKey("PK_Facts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Facts_rules_RuleId",
+                        name: "FK_Facts_Rules_RuleId",
                         column: x => x.RuleId,
-                        principalTable: "rules",
+                        principalTable: "Rules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -90,9 +90,10 @@ namespace Prolog.Migrations
                 column: "RuleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_rules_ResponseId",
-                table: "rules",
-                column: "ResponseId");
+                name: "IX_Rules_IdResponse",
+                table: "Rules",
+                column: "IdResponse",
+                unique: true);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ArgumentPositions_Facts_FactId",
@@ -103,19 +104,19 @@ namespace Prolog.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_rules_Facts_ResponseId",
-                table: "rules",
-                column: "ResponseId",
+                name: "FK_Rules_Facts_IdResponse",
+                table: "Rules",
+                column: "IdResponse",
                 principalTable: "Facts",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_rules_Facts_ResponseId",
-                table: "rules");
+                name: "FK_Rules_Facts_IdResponse",
+                table: "Rules");
 
             migrationBuilder.DropTable(
                 name: "ArgumentPositions");
@@ -127,7 +128,7 @@ namespace Prolog.Migrations
                 name: "Facts");
 
             migrationBuilder.DropTable(
-                name: "rules");
+                name: "Rules");
         }
     }
 }
