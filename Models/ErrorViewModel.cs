@@ -1,6 +1,6 @@
 using System;
 
-namespace mvc.Models
+namespace JokeApp.Models
 {
     public class ErrorViewModel
     {
