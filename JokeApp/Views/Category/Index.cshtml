@@ -1,0 +1,30 @@
+@using JokeApp.Models.CategoryViewModels;
+@model CategoriesViewModel; 
+<table class="table">
+    <tr>
+        <th>Nom</th>
+        <th>Date création</th>
+        <th>Date dernière modification</th>
+        <th>
+            <a class="btn btn-primary"  asp-controller="Category" asp-action="Edit">
+                Ajouter
+            </a>
+        </th>
+    </tr>
+    @foreach(var category in Model.Categories)
+    {
+        <tr>
+            <td>@category.Name</td>
+            <td>@category.CreationDate</td>
+            <td>@category.LastUpdateDate</td>
+            <td>
+            <a class="btn btn-primary"  asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id">
+                Editer
+            </a>
+            <a class="btn btn-danger"   asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id">
+                Supprimer
+            </a>
+            </td>
+        </tr>
+    }
+</table>

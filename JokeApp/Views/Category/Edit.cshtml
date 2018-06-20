@@ -1,0 +1,7 @@
+@model Category;
+<form asp-controller="Category" asp-action="Edit" method="post">
+        Nom :
+        <input type="text" asp-for="Name">
+        <input type="hidden" asp-for="CreationDate">
+        <input class="btn btn-success" type="submit" value="Valider">
+</form>

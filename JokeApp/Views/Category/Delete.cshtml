@@ -1,0 +1,8 @@
+@model Category;
+<form asp-controller="Category" asp-action="Delete" method="post">
+
+    <p>
+        Voulez vous vraiment supprimer la catégorie @Model.Name ?
+    </p>
+    <input class="btn btn-success" type="submit" value="Valider">
+</form>
