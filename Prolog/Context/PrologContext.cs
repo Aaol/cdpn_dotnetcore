@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Sqlite;
+using Microsoft.EntityFrameworkCore.SqlServer;
 using Prolog.Models;
 
 namespace Prolog.Context
@@ -14,7 +14,7 @@ namespace Prolog.Context
         public DbSet<Rule> Rules { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"DataSource=app.db");
+            optionsBuilder.UseSqlServer(@"Server=localhost;Database=Prolog;Trusted_Connection=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
