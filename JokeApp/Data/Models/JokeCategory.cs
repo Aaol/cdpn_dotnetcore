@@ -1,6 +1,6 @@
 namespace JokeApp.Data.Models
 {
-    public class JokeCategory
+    public class JokeCategory : IHaveID
     {
         public long Id { get; set; }
         public virtual Joke Joke { get; set; }

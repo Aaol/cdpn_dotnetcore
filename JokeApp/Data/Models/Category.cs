@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace JokeApp.Data.Models
 {
-    public class Category
+    public class Category : IHaveID
     {
         public long Id { get; set; }
         public string Name { get; set; }

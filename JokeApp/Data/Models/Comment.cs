@@ -2,7 +2,7 @@ using System;
 
 namespace JokeApp.Data.Models
 {
-    public class Comment
+    public class Comment : IHaveID
     {
         public long Id { get; set; }
         public virtual Author Author { get; set; }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace JokeApp.Data.Models
 {
-    public class Author
+    public class Author : IHaveID
     {
         public long Id { get; set; }
         public string NickName { get; set; }

@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore.Proxies;
 using JokeApp.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using JokeApp.Data.Models;
+using JokeApp.Services;
 
 namespace JokeApp
 {
@@ -42,6 +44,7 @@ namespace JokeApp
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddTransient<IBaseEntityService<Joke>, JokeService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
