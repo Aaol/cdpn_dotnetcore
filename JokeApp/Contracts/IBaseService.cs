@@ -1,4 +1,4 @@
-namespace JokeApp.Services
+namespace JokeApp.Contracts
 {
     public interface IBaseService
     {

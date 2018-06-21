@@ -6,6 +6,8 @@ using JokeApp.Helpers;
 using JokeApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using JokeApp.Contracts;
+
 namespace JokeApp.Controllers
 {
     public abstract class BaseEntityApiController : ControllerBase
@@ -41,43 +43,34 @@ namespace JokeApp.Controllers
             where T: class, IHaveID
         {
             IBaseEntityService<T> service = this.Services.OfType<IBaseEntityService<T>>().First();
-            ICollection<string> errors = new List<string>();
-            IEnumerable<T> entity = new List<T>();
-            try
-            {
-                entity = service.FindAll();  
-            }
-            catch (System.Exception e)
-            {
-                errors.Add(e.Message);
-            }
-            return NewResponse(CreateResponse(entity, errors, success));
+            return this.ResponseServiceFunction(service.FindAll);
         }
         protected IActionResult GetOne<T>(long id, string success = null)
             where T: class, IHaveID
         {
             IBaseEntityService<T> service = this.Services.OfType<IBaseEntityService<T>>().First();
-            ICollection<string> errors = new List<string>();
-            T entity = null;
-            try
-            {
-                entity = service.FindById(id);  
-            }
-            catch (System.Exception e)
-            {
-                errors.Add(e.Message);
-            }
-            return NewResponse(CreateResponse(entity, errors, success));
+            return this.ResponseServiceFunction<T, long>(service.FindById, id);
         }
         protected IActionResult Delete<T>(long id, string success = null)
             where T: class, IHaveID
         {
             IBaseEntityService<T> service = this.Services.OfType<IBaseEntityService<T>>().First();
+            return this.ResponseServiceFunction<T,long>(service.Delete, id);
+        }
+        protected IActionResult AddOrUpdate<T>(T value, string success = null)
+            where T: class, IHaveID
+        {
+            IBaseEntityService<T> service = this.Services.OfType<IBaseEntityService<T>>().First();
+            return this.ResponseServiceFunction<T,T>(service.AddOrUpdate, value);
+        }
+        protected IActionResult ResponseServiceFunction<T>(Func<T> serviceFunc, string success = null)
+            where T: class
+        {
             ICollection<string> errors = new List<string>();
-            bool entity = false;
+            T entity = null;
             try
             {
-                entity = service.Delete(id);  
+                entity = serviceFunc();  
             }
             catch (System.Exception e)
             {
@@ -85,15 +78,14 @@ namespace JokeApp.Controllers
             }
             return NewResponse(CreateResponse(entity, errors, success));
         }
-        protected IActionResult AddOrUpdate<T>(T value, string success = null)
-            where T: class, IHaveID
+        protected IActionResult ResponseServiceFunction<T,U>(Func<U,T> serviceFunc, U param1 ,string success = null)
+            where T: class
         {
-            IBaseEntityService<T> service = this.Services.OfType<IBaseEntityService<T>>().First();
             ICollection<string> errors = new List<string>();
             T entity = null;
             try
             {
-                entity = service.AddOrUpdate(value);  
+                entity = serviceFunc(param1);  
             }
             catch (System.Exception e)
             {

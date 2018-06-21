@@ -15,6 +15,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using JokeApp.Data.Models;
 using JokeApp.Services;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using JokeApp.Contracts;
 
 namespace JokeApp
 {
@@ -39,14 +42,18 @@ namespace JokeApp
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options
-                .UseLazyLoadingProxies()
                 .UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddTransient<IBaseEntityService<Joke>, JokeService>();
+            services.AddTransient<IJokeService, JokeService>();
+            services.AddTransient<IBaseEntityService<Category>, CategoryService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

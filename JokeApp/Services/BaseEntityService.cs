@@ -1,23 +1,28 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using JokeApp.Contracts;
 using JokeApp.Data;
 using JokeApp.Data.Models;
-
+using Microsoft.EntityFrameworkCore;
 namespace JokeApp.Services
 {
     public abstract class BaseEntityService<T> : IBaseEntityService<T>
-        where T: class, IHaveID
+        where T : class, IHaveID
     {
         public BaseEntityService(ApplicationDbContext context)
         {
             this.Entities = context;
         }
 
-        public ApplicationDbContext Entities { get ; set ; }
+        public ApplicationDbContext Entities { get; set; }
 
         public T AddOrUpdate(T value)
         {
             ActionOnAddOrUpdate(value);
-            if(value.Id == 0)
+            if (value.Id == 0)
             {
                 this.Entities.Add(value);
             }
@@ -32,14 +37,14 @@ namespace JokeApp.Services
         {
 
         }
-        public bool Delete(long id)
+        public T Delete(long id)
         {
             T value = this.Entities.Set<T>().Find(id);
             this.Entities.Remove(value);
             try
             {
                 this.Entities.SaveChanges();
-                return true;
+                return value;
             }
             catch (System.Exception)
             {
@@ -51,7 +56,10 @@ namespace JokeApp.Services
         {
             return this.Entities.Set<T>();
         }
-
+        protected IQueryable<T> FindAllIncludable()
+        {
+            return this.Entities.Set<T>();
+        }
         public T FindById(long id)
         {
             return this.Entities.Set<T>().Find(id);
