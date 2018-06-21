@@ -5,9 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JokeApp.Controllers 
 {
+    [Route("api/joke")]
     public class JokeController : BaseEntityApiController
     {
-        public JokeController(IBaseEntityService<Joke> jokeService)
+        public JokeController(IBaseEntityService<Joke> jokeService) : base()
         {
             this.Services.Add(jokeService);
         }
@@ -22,6 +23,11 @@ namespace JokeApp.Controllers
         public IActionResult PostJoke([FromBody] Joke joke)
         {
             return this.AddOrUpdate(joke);
+        }
+        [HttpDelete("joke/{id}")]
+        public IActionResult DeleteJoke(long id)
+        {
+            return this.Delete<Joke>(id);
         }
     }
 }

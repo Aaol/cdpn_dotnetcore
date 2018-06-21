@@ -13,6 +13,7 @@ namespace JokeApp.Controllers
         public ICollection<IBaseService> Services { get; set; }
         public BaseEntityApiController()
         {
+            this.Services = new List<IBaseService>();
         }
 
 
@@ -40,7 +41,7 @@ namespace JokeApp.Controllers
             where T: class, IHaveID
         {
             IBaseEntityService<T> service = this.Services.OfType<IBaseEntityService<T>>().First();
-            ICollection<string> errors = null;
+            ICollection<string> errors = new List<string>();
             IEnumerable<T> entity = new List<T>();
             try
             {
@@ -48,7 +49,6 @@ namespace JokeApp.Controllers
             }
             catch (System.Exception e)
             {
-                errors = new List<string>();
                 errors.Add(e.Message);
             }
             return NewResponse(CreateResponse(entity, errors, success));
@@ -57,7 +57,7 @@ namespace JokeApp.Controllers
             where T: class, IHaveID
         {
             IBaseEntityService<T> service = this.Services.OfType<IBaseEntityService<T>>().First();
-            ICollection<string> errors = null;
+            ICollection<string> errors = new List<string>();
             T entity = null;
             try
             {
@@ -65,7 +65,6 @@ namespace JokeApp.Controllers
             }
             catch (System.Exception e)
             {
-                errors = new List<string>();
                 errors.Add(e.Message);
             }
             return NewResponse(CreateResponse(entity, errors, success));
@@ -74,7 +73,7 @@ namespace JokeApp.Controllers
             where T: class, IHaveID
         {
             IBaseEntityService<T> service = this.Services.OfType<IBaseEntityService<T>>().First();
-            ICollection<string> errors = null;
+            ICollection<string> errors = new List<string>();
             bool entity = false;
             try
             {
@@ -82,7 +81,6 @@ namespace JokeApp.Controllers
             }
             catch (System.Exception e)
             {
-                errors = new List<string>();
                 errors.Add(e.Message);
             }
             return NewResponse(CreateResponse(entity, errors, success));
@@ -91,7 +89,7 @@ namespace JokeApp.Controllers
             where T: class, IHaveID
         {
             IBaseEntityService<T> service = this.Services.OfType<IBaseEntityService<T>>().First();
-            ICollection<string> errors = null;
+            ICollection<string> errors = new List<string>();
             T entity = null;
             try
             {
@@ -99,7 +97,6 @@ namespace JokeApp.Controllers
             }
             catch (System.Exception e)
             {
-                errors = new List<string>();
                 errors.Add(e.Message);
             }
             return NewResponse(CreateResponse(entity, errors, success));

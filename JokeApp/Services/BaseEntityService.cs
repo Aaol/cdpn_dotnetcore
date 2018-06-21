@@ -16,6 +16,7 @@ namespace JokeApp.Services
 
         public T AddOrUpdate(T value)
         {
+            ActionOnAddOrUpdate(value);
             if(value.Id == 0)
             {
                 this.Entities.Add(value);
@@ -27,7 +28,10 @@ namespace JokeApp.Services
             this.Entities.SaveChanges();
             return value;
         }
+        protected virtual void ActionOnAddOrUpdate(T value)
+        {
 
+        }
         public bool Delete(long id)
         {
             T value = this.Entities.Set<T>().Find(id);
